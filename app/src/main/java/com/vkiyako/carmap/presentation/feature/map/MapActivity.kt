@@ -19,7 +19,7 @@ class MapActivity : AppCompatActivity() {
 
 
         mapView.setOnTouchListener { _, motionEvent ->
-            mapViewModel.onMapTouch(motionEvent.x, motionEvent.y)
+            mapViewModel.onMapTouch(motionEvent.x, motionEvent.y, mapView.height)
             true
         }
 

@@ -46,18 +46,25 @@ class MapView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        val saveCount = canvas.save()
+        // set origin of coordinates to bottom left corner as in traditional math
+        canvas.translate(0f, height.toFloat())   // reset where 0,0 is located
+        canvas.scale(1f, -1f)    // invert
+
         whenNotNull(car) {
             drawCar(it, canvas)
         }
         whenNotNull(destination) {
             drawDestination(it, canvas)
         }
+
+        canvas.restoreToCount(saveCount)
     }
 
     @Suppress("NOTHING_TO_INLINE")
     private inline fun drawCar(car: Car, canvas: Canvas) {
         val saveCount = canvas.save()
-        canvas.rotate(car.angle.toFloat(), car.position.x, car.position.y)
+        canvas.rotate(car.angle.toFloat() - 90, car.position.x, car.position.y)
         val topLeftX = car.position.x + carWidth / 2
         val topLeftY = car.position.y
         val bottomRightX = topLeftX - carWidth

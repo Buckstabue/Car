@@ -14,8 +14,8 @@ data class Car(
      */
     fun calculateAngleToDestinationOffset(destination: Position): Int {
         val idealAngleTgx: Double = (destination.y - this.position.y.toDouble()) / (destination.x - this.position.x)
-        var idealAngle: Double = Math.toDegrees(Math.atan(idealAngleTgx)) + 90 // don't know why, but without adding 90, it calculates wrong
-        if (destination.x > this.position.x) {
+        var idealAngle: Double = Math.toDegrees(Math.atan(idealAngleTgx))
+        if (destination.x <= this.position.x) {
             idealAngle += 180 // if destination is behind of the car, we should turn 180 degrees
         }
         idealAngle %= 360

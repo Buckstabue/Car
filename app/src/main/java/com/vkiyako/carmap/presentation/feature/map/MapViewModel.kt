@@ -27,8 +27,11 @@ class MapViewModel : ViewModel() {
         carLiveData.postValue(createDefaultCar())
     }
 
-    fun onMapTouch(x: Float, y: Float) {
-        val destination = Position(x, y)
+    fun onMapTouch(x: Float, y: Float, mapViewHeight: Int) {
+        val realX = x
+        val realY = mapViewHeight - y
+        val destination = Position(realX, realY)
+
         this.destination = destination
         destinationLiveData.postValue(destination)
         val newCar = carLiveData.value ?: createDefaultCar()
@@ -42,10 +45,10 @@ class MapViewModel : ViewModel() {
 
     private fun createDefaultCar(): Car {
         return Car(
-            position = Position(200f, 200f),
+            position = Position(200f, 100f),
             speed = 0.0,
             stateTimestamp = System.currentTimeMillis(),
-            angle = 0.0
+            angle = 45.0
         )
     }
 
