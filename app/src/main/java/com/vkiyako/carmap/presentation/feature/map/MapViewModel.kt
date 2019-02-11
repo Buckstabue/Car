@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.vkiyako.carmap.domain.entity.Angle
 import com.vkiyako.carmap.domain.entity.Car
 import com.vkiyako.carmap.domain.entity.Position
-import com.vkiyako.carmap.domain.interactor.SimpleCarPositionInteractor
+import com.vkiyako.carmap.domain.interactor.CarPositionInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MapViewModel : ViewModel() {
-    private val carPositionInteractor = SimpleCarPositionInteractor() // TODO use DI
-
+class MapViewModel(
+    private val carPositionInteractor: CarPositionInteractor
+) : ViewModel() {
     val carLiveData by lazy { MutableLiveData<Car>() }
     val destinationLiveData by lazy { MutableLiveData<Position>() }
 
@@ -46,10 +46,10 @@ class MapViewModel : ViewModel() {
 
     private fun createDefaultCar(): Car {
         return Car(
-            position = Position(200f, 100f),
+            position = Position(250f, 500f),
             speed = 0.0,
             stateTimestamp = System.currentTimeMillis(),
-            angle = Angle.fromDegrees(45.0)
+            angle = Angle.fromDegrees(15.0)
         )
     }
 
