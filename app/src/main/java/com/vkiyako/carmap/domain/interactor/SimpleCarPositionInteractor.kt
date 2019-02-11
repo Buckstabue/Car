@@ -4,7 +4,6 @@ import com.vkiyako.carmap.domain.entity.Car
 import com.vkiyako.carmap.domain.entity.Position
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.*
 
 class SimpleCarPositionInteractor {
@@ -14,8 +13,6 @@ class SimpleCarPositionInteractor {
         private const val MAX_SPEED = 20.0
         private const val TURN_SPEED = 20.0 // degrees per second
 
-        private val ANGLE_FIXED_FLAG = AtomicBoolean()
-
         private const val DISTANCE_EPS = 8
     }
 
@@ -23,7 +20,6 @@ class SimpleCarPositionInteractor {
         return Flowable.create(
             {
                 try {
-                    ANGLE_FIXED_FLAG.set(false)
                     var nextCar = car.copy(stateTimestamp = System.currentTimeMillis())
                     while (nextCar.position.getDistanceTo(destination) > DISTANCE_EPS) {
                         Thread.sleep(SLEEP_MS)
