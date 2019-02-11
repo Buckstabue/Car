@@ -9,6 +9,7 @@ import com.vkiyako.carmap.domain.entity.Position
 import com.vkiyako.carmap.domain.interactor.CarPositionInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 
 class MapViewModel(
@@ -18,9 +19,9 @@ class MapViewModel(
     val destinationLiveData by lazy { MutableLiveData<Position>() }
 
     private var destination: Position? = null
-    private var carPositionSubscription: Disposable? = null
+    private var carPositionSubscription: Disposable = Disposables.disposed()
         set(value) {
-            field?.dispose()
+            field.dispose()
             field = value
         }
 
@@ -29,6 +30,11 @@ class MapViewModel(
     }
 
     fun onMapTouch(x: Float, y: Float, mapViewHeight: Int) {
+        val isCarMoving = !carPositionSubscription.isDisposed
+        if (isCarMoving) {
+            return // ignore user input while car is moving
+        }
+
         val realX = x
         val realY = mapViewHeight - y // translate Y coordinate to traditional math Y, where Y starts on bottom left
         val destination = Position(realX, realY)
@@ -55,6 +61,6 @@ class MapViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        carPositionSubscription?.dispose()
+        carPositionSubscription.dispose()
     }
 }

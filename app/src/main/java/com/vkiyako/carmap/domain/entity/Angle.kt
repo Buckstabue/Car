@@ -2,7 +2,7 @@ package com.vkiyako.carmap.domain.entity
 
 class Angle private constructor(
     /**
-     * Always within (-360, 360)
+     * Always within [-180, 180)
      */
     val degrees: Double
 ) {
@@ -10,14 +10,19 @@ class Angle private constructor(
         fun fromRadians(radians: Double) = Angle.fromDegrees(Math.toDegrees(radians))
         fun fromDegrees(degrees: Double) = Angle(degrees = optimizeAngle(degrees))
 
-        // set angle within [-360, 360)
+        // set angle within [-180, 180)
         private fun optimizeAngle(degrees: Double): Double {
-            return degrees % 360
+            var degrees = degrees % 360
+            return if (degrees > 180) {
+                degrees - 360.0
+            } else {
+                degrees
+            }
         }
     }
 
     /**
-     * Always within (-2p, 2p)
+     * Always within [-p, p)
      */
     val radians: Double
         get() = Math.toRadians(degrees)
@@ -25,8 +30,6 @@ class Angle private constructor(
     override fun toString(): String {
         return "Angle(degrees=$degrees)"
     }
-
-
 }
 
 operator fun Angle.plus(value: Angle): Angle {
