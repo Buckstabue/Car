@@ -75,7 +75,7 @@ class SimpleCarPositionInteractor {
 
         val radianAngle = Math.toRadians(angle)
         val deltaX = realDistance * cos(radianAngle)
-        val deltaY = realDistance * sign(radianAngle)
+        val deltaY = realDistance * sin(radianAngle)
 
         val newCarVectorX: Double = currentPosition.x + deltaX
         val newCarVectorY: Double = currentPosition.y + deltaY
