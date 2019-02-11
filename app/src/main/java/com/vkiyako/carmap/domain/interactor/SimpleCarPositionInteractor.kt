@@ -10,10 +10,10 @@ import kotlin.math.*
 
 class SimpleCarPositionInteractor : CarPositionInteractor {
     companion object {
-        private const val RATE = 20 // approximate number of updates per second
+        private const val RATE = 60 // approximate number of updates per second
         private val SLEEP_MS = (1000.0 / RATE).roundToLong()
-        private const val MAX_SPEED = 60.0 / 1000.0 // pixels per millisecond
-        private const val TURN_SPEED = 60.0 / 1000.0 // degrees per millisecond
+        private const val MAX_SPEED = 120.0 / 1000.0 // pixels per millisecond
+        private const val TURN_SPEED = 80.0 / 1000.0 // degrees per millisecond
 
         /**
          * indicates min distance in pixels to destination when the car is considered to be on place

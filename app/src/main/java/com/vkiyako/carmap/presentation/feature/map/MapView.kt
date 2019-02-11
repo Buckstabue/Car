@@ -33,15 +33,15 @@ class MapView @JvmOverloads constructor(
     private val destinationRadius = context.dpToPx(10).toFloat()
     private val carDirectionRadius = context.dpToPx(5).toFloat()
 
-    private val circlePaint = Paint().apply {
+    private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = context.getCompatColor(R.color.green)
     }
 
-    private val carPaint = Paint().apply {
+    private val carPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = context.getCompatColor(R.color.light_orange)
     }
 
-    private val carDirectionPaint = Paint().apply {
+    private val carDirectionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = context.getCompatColor(R.color.dark_purple)
     }
 
