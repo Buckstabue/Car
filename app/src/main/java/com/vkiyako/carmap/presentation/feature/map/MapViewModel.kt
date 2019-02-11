@@ -29,7 +29,7 @@ class MapViewModel : ViewModel() {
 
     fun onMapTouch(x: Float, y: Float, mapViewHeight: Int) {
         val realX = x
-        val realY = mapViewHeight - y
+        val realY = mapViewHeight - y // translate Y coordinate to traditional math Y, where Y starts on bottom left
         val destination = Position(realX, realY)
 
         this.destination = destination
