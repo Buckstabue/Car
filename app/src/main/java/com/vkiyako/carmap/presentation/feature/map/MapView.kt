@@ -64,7 +64,7 @@ class MapView @JvmOverloads constructor(
     @Suppress("NOTHING_TO_INLINE")
     private inline fun drawCar(car: Car, canvas: Canvas) {
         val saveCount = canvas.save()
-        canvas.rotate(car.angle.toFloat() - 90, car.position.x, car.position.y)
+        canvas.rotate(car.angle.degrees.toFloat() - 90, car.position.x, car.position.y)
         val topLeftX = car.position.x + carWidth / 2
         val topLeftY = car.position.y
         val bottomRightX = topLeftX - carWidth

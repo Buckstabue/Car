@@ -3,6 +3,7 @@ package com.vkiyako.carmap.presentation.feature.map
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.vkiyako.carmap.domain.entity.Angle
 import com.vkiyako.carmap.domain.entity.Car
 import com.vkiyako.carmap.domain.entity.Position
 import com.vkiyako.carmap.domain.interactor.SimpleCarPositionInteractor
@@ -48,7 +49,7 @@ class MapViewModel : ViewModel() {
             position = Position(200f, 100f),
             speed = 0.0,
             stateTimestamp = System.currentTimeMillis(),
-            angle = 45.0
+            angle = Angle.fromDegrees(45.0)
         )
     }
 
