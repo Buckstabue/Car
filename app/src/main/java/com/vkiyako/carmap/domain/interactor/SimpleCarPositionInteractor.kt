@@ -43,13 +43,14 @@ class SimpleCarPositionInteractor {
         val newTimestamp: Long = System.currentTimeMillis()
         val timeDelta: Long = newTimestamp - car.stateTimestamp
         // angle offset that car might be impossible to turn within timeDelta
-        val desiredAngleOffset: Int = car.calculateAngleToDestinationOffset(destination)
+        val desiredAngleOffset: Double = car.calculateAngleToDestinationOffset(destination)
         // how much time from timeDelta will be spent on turning car
         val turnTime: Long = min(calculateTimeMsToTurn(desiredAngleOffset), timeDelta)
         // how much time from timeDelta will be spent on moving car
         val movementTime: Long = timeDelta - turnTime
         // offset applied to the current car angle within the current time delta
-        val realAngleOffset: Double = sign(desiredAngleOffset.toDouble()) * (turnTime * TURN_SPEED) / 1000.0
+        val realAngleOffset: Double = sign(desiredAngleOffset) *
+                min((turnTime * TURN_SPEED) / 1000.0, abs(desiredAngleOffset))
         val newAngle: Double = (car.angle + realAngleOffset) % 360
         val newPosition: Position = calculateNextPosition(car.position, newAngle, movementTime, destination)
         return Car(
@@ -60,8 +61,8 @@ class SimpleCarPositionInteractor {
         )
     }
 
-    private fun calculateTimeMsToTurn(angle: Int): Long {
-        if (angle == 0) {
+    private fun calculateTimeMsToTurn(angle: Double): Long {
+        if (angle == 0.0) {
             return 0
         }
         return ((TURN_SPEED / abs(angle)) * 1000).roundToLong()
