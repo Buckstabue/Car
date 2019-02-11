@@ -11,20 +11,19 @@ data class Car(
      * The more offset is, the greater angle the car must turn
      */
     fun calculateAngleToDestinationOffset(destination: Position): Angle {
-        val idealAngleTgx: Double = (destination.y - this.position.y.toDouble()) / (destination.x - this.position.x)
-        var idealAngle = Angle.fromRadians(Math.atan(idealAngleTgx))
-        if (destination.x <= this.position.x) {
-            // if destination is behind the car, we should turn 180 degrees
-            idealAngle += Angle.fromDegrees(180.0)
+        val slopeAngleTgx: Double = (destination.y - this.position.y.toDouble()) / (destination.x - this.position.x)
+        var slopeAngle = Angle.fromRadians(Math.atan(slopeAngleTgx))
+        if (slopeAngle.degrees < 0) {
+            slopeAngle = Angle.fromDegrees(180.0) + slopeAngle // = 180 - abs(slopeAngle) since slopeAngle is negative
+        }
+        val deltaY = position.y - destination.y
+        val idealAngle = if (deltaY < 0) {
+            slopeAngle
+        } else {
+            slopeAngle + Angle.fromDegrees(180.0)
         }
 
         val angleOffset = idealAngle - this.angle
-        return if (angleOffset.degrees > 180) {
-            // fixing direction of turning to make it faster, otherwise we would always turn the same direction
-            // 181 degrees -> -179 degrees
-            angleOffset - Angle.fromDegrees(360.0)
-        } else {
-            angleOffset
-        }
+        return angleOffset
     }
 }
