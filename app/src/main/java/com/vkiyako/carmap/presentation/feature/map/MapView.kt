@@ -66,13 +66,14 @@ class MapView @JvmOverloads constructor(
         val saveCount = canvas.save()
         canvas.rotate(car.angle.degrees.toFloat() - 90, car.position.x, car.position.y)
         val topLeftX = car.position.x + carWidth / 2
-        val topLeftY = car.position.y
+        val topLeftY = car.position.y + carHeight / 2
         val bottomRightX = topLeftX - carWidth
-        val bottomRightY = car.position.y - carHeight
+        val bottomRightY = topLeftY - carHeight
 
         canvas.drawRect(topLeftX, topLeftY, bottomRightX, bottomRightY, carPaint)
 
-        canvas.drawCircle(car.position.x, car.position.y - carDirectionRadius, carDirectionRadius, carDirectionPaint)
+        // draw an indicator of the car direction
+        canvas.drawCircle(topLeftX - carWidth / 2, topLeftY - carDirectionRadius, carDirectionRadius, carDirectionPaint)
 
         canvas.restoreToCount(saveCount)
     }
