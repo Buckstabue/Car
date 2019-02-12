@@ -83,5 +83,3 @@ class MapView @JvmOverloads constructor(
         canvas.drawCircle(destination.x, destination.y, destinationRadius, circlePaint)
     }
 }
-
-

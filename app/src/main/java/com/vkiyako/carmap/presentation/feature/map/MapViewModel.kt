@@ -55,7 +55,7 @@ class MapViewModel(
             position = Position(250f, 500f),
             speed = 0.0,
             stateTimestamp = System.currentTimeMillis(),
-            angle = Angle.fromDegrees(15.0)
+            angle = Angle.fromDegrees(160.0)
         )
     }
 

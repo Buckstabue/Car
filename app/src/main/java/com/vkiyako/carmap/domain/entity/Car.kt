@@ -23,7 +23,7 @@ data class Car(
             slopeAngle + Angle.fromDegrees(180.0)
         }
 
-        val angleOffset = idealAngle - this.angle
+        var angleOffset = idealAngle - this.angle
         return angleOffset
     }
 }

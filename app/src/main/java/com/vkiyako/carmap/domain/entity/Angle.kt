@@ -13,10 +13,10 @@ class Angle private constructor(
         // set angle within [-180, 180)
         private fun optimizeAngle(degrees: Double): Double {
             var degrees = degrees % 360
-            return if (degrees > 180) {
-                degrees - 360.0
-            } else {
-                degrees
+            return when {
+                degrees >= 180 -> degrees - 360.0
+                degrees < -180 -> degrees + 360
+                else -> degrees
             }
         }
     }
